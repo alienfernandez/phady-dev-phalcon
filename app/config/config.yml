@@ -1,0 +1,121 @@
+#Configuracion de framework
+framework:
+    locale: es
+    session: ~
+    datetime:
+        timezone: America/Guayaquil
+        default_format: Y-m-d
+    catalog:
+        default_item: NO_DEFINIDO
+
+
+routing:
+    modules:
+        default:
+            name:       common
+            namespace:  App\Common\Controllers
+            route:
+                path:       /
+                options:
+                    module: common
+                    ns: App\Common\Controllers
+                    controller: index
+                    action: index
+    
+# Configuracion del orm
+orm:
+    database:
+        driver:     mysql
+        host:       localhost
+        port:       ~
+        dbname:     phady
+        username:   root
+        password:   dani
+        charset:    UTF8
+        
+# Configuracion de mail y swiftmailer
+mail:
+    mail_templates_dir: mail_templates
+    from_name: Secretaría de Gestión de la Política
+    from_email: alien@oraculo.la
+    swiftmailer:
+        transport: smtp
+        host:      mail.oraculo.la
+        port:      25
+        username:  alien@oraculo.la
+        password:  daniela2014**
+
+# Configuracion de generacion de pdf
+pdf:
+    pdf_templates_dir: pdf_templates
+
+# Configuracion de descargas de archivos
+files:
+    files_default_dir: files
+
+# Configuracion del sistema de log
+log:
+    monolog:
+        handlers:
+            applog:
+                type: stream
+                path: logs/log.log
+                level: error
+            main:
+                type: fingers_crossed
+                action_level: warning
+                handler: file
+            syslog:
+                type: syslog
+                level: error
+        mongodb:
+            server: "mongodb://localhost:27017"
+            database: app
+            collection: logs
+            log_level: "Logger::DEBUG"
+            time_zone: UTC
+            datetime_format: "Y-m-d H:i:s"
+
+# Configuracion del sistema de cache
+cache:
+    # Configuracion del sistema de cache redis
+    redis:
+        default:
+            #ip:     192.168.10.239
+            host:   localhost
+            port:   6379
+
+# Configuracion del sistema de mensajeria
+messaging:     
+    # Configuracion del sistema de mensajeria RabbitMQ
+    rabbitmq:
+        server:     localhost
+        port:       5672
+        username:   rabbitmq
+        password:   cordicom
+
+# Configuracion de la cola de mensajes
+message_queues:
+    contactos: msg_contacto_xls
+# Tamaño máximo de subida del servidor
+upload:
+    max_size_upload: 5M #5MB
+
+# Configuración de conexión del Alfresco  Ex: http://192.168.50.61:8080/alfresco/s/api/login
+services:
+  alfresco:
+    server: 192.168.50.61
+    puerto: 8080
+    protocolo: http
+    usuario: admin
+    password: yakindu00
+    type:
+      rest: api
+      soap: soapapi
+
+# Configuracion mailbox para casos
+mailbox:
+  mail: contactociudadano@oraculo.la
+  password: contacto
+  useNoValidateCertSSL: true
+  server: mail.oraculo.la

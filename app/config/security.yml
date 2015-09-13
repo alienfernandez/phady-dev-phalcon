@@ -1,0 +1,46 @@
+security:
+    phady_user:
+        db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+        firewall_name: admin
+        user_class: Phady\Security\Models\Core\Entities\User
+
+    encoders:
+#        Phady\Security\Core\Models\Entities\User: plaintext
+#        Phady\Security\Core\Models\Entities\User:
+#            algorithm: bcrypt
+#            cost: 13
+        Phady\Security\Core\Models\Entities\User:
+            algorithm:           sha512
+            encode_as_base64:    true
+            iterations:          5000
+
+    providers:
+        phady_user_db:
+            entity: { class: \Phady\Security\Core\Models\Entities\User, property: username }
+
+    context_session: _security_main
+
+    firewalls:
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+        main:
+            pattern: ^/
+            provider: phady_user_db
+            access_denied_handler:  security.access_denied.handler
+            access_denied_url:  /access_denied
+            form_login:
+                # submit the login form here
+                check_path: /login_check
+                # the user is redirected here when they need to log in
+                login_path: /login
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: true
+#                handlers: [security.logout.handler.session]
+#                success_handler: security.logout.success_handler.default
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
