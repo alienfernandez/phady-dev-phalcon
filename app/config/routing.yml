@@ -1,43 +1,29 @@
---- # Fichero para gestionar las rutas del sistema
+--- # System routes
 routes:
     - path:       /login
       options:
         module:     common
         namespace:  App\Common\Controllers
-        controller: portal
+        controller: login
         action:     login
 
     - path:       /login_check
       options:
         module:     common
         namespace:  App\Common\Controllers
-        controller: portal
+        controller: login
         action:     login_check
-
-    - path:       /admin/home
-      options:
-        module:     common
-        namespace:  App\Common\Controllers
-        controller: portal
-        action:     admin
-
-    - path:       /ok
-      options:
-        module:     common
-        namespace:  App\Common\Controllers
-        controller: portal
-        action:     ok
 
     - path:       /logout
       options:
         module:     common
         namespace:  App\Common\Controllers
-        controller: portal
+        controller: login
         action:     logout
 
     - path:       /access_denied
       options:
         module:     common
-        namespace:  Phady\Common\Controllers
-        controller: accessdenied
-        action:     index
+        namespace:  App\Common\Controllers
+        controller: login
+        action:     access_denied

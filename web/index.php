@@ -1,4 +1,5 @@
 <?php
+use Phady\Core\KernelMvc;
 
 try {
     // This check prevents access to debug front controllers that are deployed by accident to production servers.
@@ -11,16 +12,16 @@ try {
         header('HTTP/1.0 403 Forbidden');
         exit('You are not allowed to access this file. Check ' . basename(__FILE__) . ' for more information.');
     }*/
-    $appCore = new \Phady\Core\KernelMvc('dev', false, 'mvc',
-			array(
-				array('common' => array(
-                    'className' => 'App\Common\Module',
-                    'path' => __DIR__ . '/../src/common/Module.php'
-                ))
-           ));
 
+    $modules = [[
+        "common" => ["className" => "App\\Common\\Module", "path" => __DIR__ . "/../src/common/Module.php"]
+    ]];
+    $environment = "dev"; //dev or prod
+    $mode = "mvc"; //mvc or cli
+    $appCore = new KernelMvc($environment, false, $mode, $modules);
     //Handle the request
     echo $appCore->getApplication()->handle()->getContent();
+
 } catch (Phalcon\Exception $e) {
     echo $e->getMessage();
 } catch (PDOException $e) {
